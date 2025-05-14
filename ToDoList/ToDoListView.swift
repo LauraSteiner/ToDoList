@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct ToDoListView: View {
+	let todos: [String] = [
+		"Learn Swift",
+		"Build Apps",
+		"Change the world",
+		"Bring the awesome",
+		"Take a vacation"
+	]
 	
     var body: some View {
 		NavigationStack {
 			List {
-				ForEach(1..<101, id: \.self){ number in
-					NavigationLink("Item \(number)") {
-						DetailView(passedValue: String(number))
+				ForEach(todos, id: \.self){ todo in
+					NavigationLink(todo) {
+						DetailView(passedValue: todo)
 					}
 				}
 			}
