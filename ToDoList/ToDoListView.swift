@@ -11,18 +11,16 @@ struct ToDoListView: View {
 	
     var body: some View {
 		NavigationStack {
-			VStack {
-				NavigationLink {
-					DetailView()
-				} label: {
-					Image(systemName: "eye")
-					Text("Show the new View")
+			List {
+				ForEach(1..<101, id: \.self){ number in
+					NavigationLink("Item \(number)") {
+						DetailView(passedValue: String(number))
+					}
 				}
-				.buttonStyle(.borderedProminent)
-				.tint(.pink)
-			
 			}
-			.padding()
+			.listStyle(.plain)
+			.navigationTitle("To Dos")
+			.navigationBarTitleDisplayMode(.automatic)
 		}
     }
 }
