@@ -18,22 +18,25 @@ struct ToDoListView: View {
 		NavigationStack {
 			List {
 				ForEach(todos){ todo in
-					NavigationLink {
-						DetailView(todo: todo)
-					} label: {
-						Text(todo.todo)
-					}
-					.font(.title2)
-					.swipeActions {
-						Button("Delete", role: .destructive) {
-							modelContext.delete(todo)
-							// The following updates the db right away
-							guard let _ = try? modelContext.save() else {
-								print("ERROR: save after delete on ToDoListView did not work.")
-								return
+					HStack {
+						Image(systemName:  todo.isCompleted ? "checkmark.rectangle" : "rectangle")
+						NavigationLink {
+							DetailView(todo: todo)
+						} label: {
+							Text(todo.todo)
+						}
+						.swipeActions {
+							Button("Delete", role: .destructive) {
+								modelContext.delete(todo)
+								// The following updates the db right away
+								guard let _ = try? modelContext.save() else {
+									print("ERROR: save after delete on ToDoListView did not work.")
+									return
+								}
 							}
 						}
 					}
+					.font(.title2)
 				}
 				/*
 				.onDelete{ indexSet in
