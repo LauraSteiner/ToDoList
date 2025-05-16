@@ -24,6 +24,7 @@ struct ToDoListView: View {
 						Text(todo.todo)
 					}
 					.font(.title2)
+					/*
 					.swipeActions {
 						Button("Delete", role: .destructive) {
 							modelContext.delete(todo)
@@ -32,6 +33,16 @@ struct ToDoListView: View {
 								print("ERROR: save after delete on ToDoListView did not work.")
 								return
 							}
+						}
+					}
+					 */
+				}
+				.onDelete{ indexSet in
+					indexSet.forEach { index in
+						modelContext.delete(todos[index])
+						guard let _ = try? modelContext.save() else {
+							print("ERROR: save after delete on ToDoListView did not work.")
+							return
 						}
 					}
 				}
