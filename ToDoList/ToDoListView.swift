@@ -24,7 +24,6 @@ struct ToDoListView: View {
 						Text(todo.todo)
 					}
 					.font(.title2)
-					/*
 					.swipeActions {
 						Button("Delete", role: .destructive) {
 							modelContext.delete(todo)
@@ -35,8 +34,8 @@ struct ToDoListView: View {
 							}
 						}
 					}
-					 */
 				}
+				/*
 				.onDelete{ indexSet in
 					indexSet.forEach { index in
 						modelContext.delete(todos[index])
@@ -46,6 +45,7 @@ struct ToDoListView: View {
 						}
 					}
 				}
+				 */
 			}
 			.listStyle(.plain)
 			.fullScreenCover(isPresented: $sheetIsPresented){
