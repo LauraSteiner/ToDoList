@@ -6,32 +6,48 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ToDoListView: View {
-	let todos: [String] = [
-		"Learn Swift",
-		"Build Apps",
-		"Change the world",
-		"Bring the awesome",
-		"Take a vacation"
-	]
+	
+	@State private var sheetIsPresented = false
+	@Environment(\.modelContext) var modelContext
+	@Query var todos: [ToDo]
 	
     var body: some View {
 		NavigationStack {
 			List {
-				ForEach(todos, id: \.self){ todo in
-					NavigationLink(todo) {
-						DetailView(passedValue: todo)
+				ForEach(todos){ todo in
+					NavigationLink {
+						DetailView(todo: todo)
+					} label: {
+						Text(todo.todo)
 					}
+					.font(.title2)
 				}
 			}
 			.listStyle(.plain)
+			.fullScreenCover(isPresented: $sheetIsPresented){
+				NavigationStack{
+					DetailView(todo: ToDo())
+				}
+			}
 			.navigationTitle("To Dos")
 			.navigationBarTitleDisplayMode(.automatic)
+			.toolbar {
+				ToolbarItem(placement: .topBarTrailing) {
+					Button {
+						sheetIsPresented.toggle()
+					} label: {
+						Image(systemName: "plus")
+					}
+				}
+			}
 		}
     }
 }
 
 #Preview {
     ToDoListView()
+		.modelContainer(for: ToDo.self, inMemory: true)
 }
