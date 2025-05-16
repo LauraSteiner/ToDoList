@@ -24,6 +24,16 @@ struct ToDoListView: View {
 						Text(todo.todo)
 					}
 					.font(.title2)
+					.swipeActions {
+						Button("Delete", role: .destructive) {
+							modelContext.delete(todo)
+							// The following updates the db right away
+							guard let _ = try? modelContext.save() else {
+								print("ERROR: save after delete on ToDoListView did not work.")
+								return
+							}
+						}
+					}
 				}
 			}
 			.listStyle(.plain)
